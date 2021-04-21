@@ -1,38 +1,109 @@
 .App {
+  background-color: black;
+  color: white;
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 8rem;
+}
+
+.Navigation {
+  background-color:white;
+  box-shadow: 0 0.125rem 2rem rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 1.5rem;
+  width: 100%;
+}
+
+.Navigation__logo {
+  max-height: 24px;
+}
+
+.Stations {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 3rem;
+}
+
+.Station {
+  user-select: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: space-around;
+  flex-wrap: wrap;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Station:first-child {
+  grid-column: 2 / span 1;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Station__image {
+  display: block;
+  max-width: 256px;
+  user-select: none;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.Station__availability {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
-.App-link {
-  color: #61dafb;
+.Station__availability-label {
+  margin-left: 0.5rem;
+  font-size: 1.25rem;
+  width: 100%;
+  margin-top: 1rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.Station__available,
+.Station__unavailable {
+  display: inline-block;
+}
+
+.Station__available {
+  background-color: green;
+  border-radius: 50%;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.Station__unavailable {
+  background-color: red;
+  border-radius: 50%;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.Station__eta-label {
+  display: block;
+  font-size: 1.25rem;
+}
+
+.Station__eta-value {
+  display: block;
+  width: 100%;
+  font-size: 1.55rem;
+}
+
+@media screen and (max-width: 720px) {
+  .App {
+    padding-top: 8rem;
   }
-  to {
-    transform: rotate(360deg);
+
+  .Stations {
+    grid-template-columns: 100%;
+  }
+
+  .Station:first-child {
+    grid-column: 1 / span 1;
   }
 }
