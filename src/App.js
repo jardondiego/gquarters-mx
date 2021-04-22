@@ -73,7 +73,7 @@ function App() {
             )}
             {!stationStatus.available && (
               <div className="Station__eta">
-                <span className="Station__eta-label">se le acaba</span>
+                <span className="Station__eta-label">se le acaba en:</span>
                 <span className="Station__eta-value">{stationStatus.eta}</span>
                 <span
                   className={`Station__eta-is-queue ${
