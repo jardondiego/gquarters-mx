@@ -1,21 +1,14 @@
 import moment from "moment";
+import 'moment/locale/es-mx'
 
-export default function parseStationStatus({
-  id,
-  alias,
-  finishes_at
-}) {
-  const etaHours = Math.abs(moment(finishes_at).diff(moment(), "hours"));
-  const etaMins = Math.abs(moment(finishes_at).diff(moment(), "minutes") % 60);
-  const eta =
-    etaHours > 0
-      ? `${etaHours} horas y ${etaMins} minutos`
-      : `${etaMins} minutos`;
+export default function parseStationStatus({ id, alias, finishes_at }) {
+  const eta = moment(finishes_at).locale("es-mx").fromNow();
+  const available = !moment().isBefore(moment(finishes_at));
 
   return {
     id,
     alias,
     eta,
-    available: !moment().isBefore(moment(finishes_at)),
+    available,
   };
 }

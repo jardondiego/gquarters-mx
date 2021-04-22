@@ -26,6 +26,7 @@ function App() {
       setStationsStatusLoading(false);
     } catch (error) {
       setStationsStatusError(error);
+      setStationsStatusLoading(false);
     }
   }
 
@@ -45,8 +46,8 @@ function App() {
   if (stationsStatus !== null) {
     stationsStatusEl = (
       <div className="Stations">
-        {stationsStatus.map(parseStationStatus).map((stationStatus, i) => (
-          <div className="Station" key={i}>
+        {stationsStatus.map(parseStationStatus).map(stationStatus => (
+          <div className="Station" key={stationStatus.id}>
             <img
               src={stationsImages[stationStatus.alias]}
               alt={stationStatus.alias}
@@ -73,6 +74,16 @@ function App() {
             )}
           </div>
         ))}
+      </div>
+    );
+  } else if (stationsStatusError !== null) {
+    stationsStatusEl = (
+      <div className="Error">
+        <span className="Error__message">Ocurrió un error. :(</span>
+        <details>
+          <summary>Ver más</summary>
+          <p>{stationsStatusError.toString()}</p>
+        </details>
       </div>
     );
   } else if (stationsStatusLoading) {
