@@ -6,12 +6,16 @@ import parseStationStatus from './parseStationStatus';
 import "./App.css";
 
 import logo from "./logo.png";
-import marcusStationImage from "./marcus-station.png";
-import orionStationImage from "./orion-station.png";
+import alphaStationImage from "./alpha-station.png";
+import bravoStationImage from "./bravo-station.png";
+import charlieStationImage from "./charlie-station.png";
+import deltaStationImage from "./delta-station.png";
 
 const stationsImages = {
-  marcus: marcusStationImage,
-  orion: orionStationImage,
+  alpha: alphaStationImage,
+  bravo: bravoStationImage, 
+  charlie: charlieStationImage,
+  delta: deltaStationImage
 };
 
 const EVERY_MINUTE = 60 * 1000;
@@ -48,6 +52,7 @@ function App() {
       <div className="Stations">
         {stationsStatus.map(parseStationStatus).map(stationStatus => (
           <div className="Station" key={stationStatus.id}>
+            <span className="Station__codename">{stationStatus.alias}</span>
             <img
               src={stationsImages[stationStatus.alias]}
               alt={stationStatus.alias}
@@ -68,7 +73,7 @@ function App() {
             )}
             {!stationStatus.available && (
               <div className="Station__eta">
-                <span className="Station__eta-label">Se desocupa en: </span>
+                <span className="Station__eta-label">Se desocupa: </span>
                 <span className="Station__eta-value">{stationStatus.eta}</span>
               </div>
             )}

@@ -43,9 +43,20 @@
   grid-column: 2 / span 1;
 }
 
+.Station:nth-child(3) {
+  grid-column: 2 / span 1;
+}
+
+.Station__codename {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
 .Station__image {
   display: block;
-  max-width: 256px;
+  max-height: 128px;
   user-select: none;
 }
 
@@ -118,17 +129,28 @@
   font-family: monospace;
 }
 
+
 @media screen and (max-width: 720px) {
   .App {
     padding-top: 8rem;
   }
 
   .Stations {
+    height: 100%;
     grid-template-columns: 100%;
+    overflow-y: auto;
   }
 
   .Station:first-child {
     grid-column: 1 / span 1;
+  }
+
+  .Station:nth-child(3) {
+    grid-column: 1 / span 1;
+  }
+
+  .Station:last-child {
+    padding-bottom: 4rem;
   }
 
   .Station__image {
