@@ -116,6 +116,18 @@
   color: red;
 }
 
+.Station__will-be-busy__label {
+  display: block;
+  text-align: center;
+  width: 100%;
+  font-size: 1.25rem;
+  color: darkorange;
+}
+
+.Station__will-be-busy__eta {
+   font-size: 1.5rem;
+}
+
 .Error {
   display: flex;
   align-items: center;

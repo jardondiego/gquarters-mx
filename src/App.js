@@ -26,7 +26,7 @@ function App() {
       setStationsStatusLoading(true);
       setStationsStatusError(null);
       const response = await axios.get(process.env.REACT_APP_API_URL);
-      setStationsStatus(response.data);
+      setStationsStatus(response.data.map(parseStationStatus));
       setStationsStatusLoading(false);
     } catch (error) {
       setStationsStatusError(error);
@@ -50,7 +50,7 @@ function App() {
   if (stationsStatus !== null) {
     stationsStatusEl = (
       <div className="Stations">
-        {stationsStatus.map(parseStationStatus).map((stationStatus) => (
+        {stationsStatus.map((stationStatus) => (
           <div className="Station" key={stationStatus.id}>
             <span className="Station__codename">{stationStatus.alias}</span>
             <img
@@ -71,10 +71,22 @@ function App() {
                 </span>
               </div>
             )}
+            {stationStatus.busy_at !== null && (
+              <div className="Station__will-be-busy">
+                <span className="Station__will-be-busy__label">
+                  se va a ocupar en:
+                </span>
+                <span className="Station__will-be-busy__eta">
+                  {stationStatus.etaBusy}
+                </span>
+              </div>
+            )}
             {!stationStatus.available && (
               <div className="Station__eta">
                 <span className="Station__eta-label">se le acaba en:</span>
-                <span className="Station__eta-value">{stationStatus.eta}</span>
+                <span className="Station__eta-value">
+                  {stationStatus.etaFree}
+                </span>
                 <span
                   className={`Station__eta-is-queue ${
                     stationStatus.isQueue

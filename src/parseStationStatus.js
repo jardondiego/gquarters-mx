@@ -4,21 +4,31 @@ import "moment/locale/es-mx";
 export default function parseStationStatus({
   id,
   alias,
-  finishes_at,
+  free_at,
+  busy_at,
   isQueue,
 }) {
-  const etaHours = Math.abs(moment(finishes_at).diff(moment(), "hours"));
-  const etaMins = Math.abs(moment(finishes_at).diff(moment(), "minutes") % 60);
-  const eta =
-    etaHours > 0
-      ? `${etaHours} horas y ${etaMins} minutos`
-      : `${etaMins} minutos`;
-  const available = !moment().isBefore(moment(finishes_at));
+  const etaHoursFree = moment(free_at).diff(moment(), "hours");
+  const etaMinsFree = moment(free_at).diff(moment(), "minutes") % 60;
+  const etaFree =
+    etaHoursFree > 0
+      ? `${etaHoursFree} horas y ${etaMinsFree} minutos`
+      : `${etaMinsFree} minutos`;
+
+  const etaHoursBusy = moment(busy_at).diff(moment(), "hours");
+  const etaMinsBusy = moment(busy_at).diff(moment(), "minutes") % 60;
+  const etaBusy =
+    etaHoursBusy > 0
+      ? `${etaHoursBusy} horas y ${etaMinsBusy} minutos`
+      : `${etaMinsBusy} minutos`;
+  const available = !moment().isBefore(moment(free_at));
 
   return {
     id,
     alias,
-    eta,
+    busy_at,
+    etaFree: available ? null : etaFree,
+    etaBusy,
     available,
     isQueue,
   };
