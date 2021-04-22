@@ -70,7 +70,8 @@
 }
 
 .Station__available {
-  background-color: green;
+  background-color: #107C10;
+  box-shadow: 0px 0px 2rem 2rem rgba(16, 124, 16, 0.5);
   border-radius: 50%;
   height: 1.5rem;
   width: 1.5rem;
@@ -78,6 +79,7 @@
 
 .Station__unavailable {
   background-color: red;
+  box-shadow: 0px 0px 2rem 2rem rgba(255, 0, 0, 0.5);
   border-radius: 50%;
   height: 1.5rem;
   width: 1.5rem;
@@ -94,6 +96,28 @@
   font-size: 1.55rem;
 }
 
+.Error {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 70%;
+  height: 100%; 
+}
+
+.Error__message {
+  display: block;
+  width: 100%;
+  margin-top: auto;
+}
+
+.Error details {
+  margin-bottom: auto;
+}
+
+.Error p {
+  font-family: monospace;
+}
+
 @media screen and (max-width: 720px) {
   .App {
     padding-top: 8rem;
@@ -105,5 +129,14 @@
 
   .Station:first-child {
     grid-column: 1 / span 1;
+  }
+
+  .Station__image {
+    max-width: 10rem;
+  }
+
+  .Error {
+    overflow-y: auto;
+    max-width: 80%;
   }
 }
