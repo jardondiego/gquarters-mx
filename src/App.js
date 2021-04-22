@@ -3,6 +3,7 @@ import { CircleSpinner } from "react-spinners-kit";
 import axios from "axios";
 
 import parseStationStatus from "./parseStationStatus";
+import { apiUrl } from './constants';
 import "./App.css";
 
 import logo from "./logo.png";
@@ -25,7 +26,7 @@ function App() {
     try {
       setStationsStatusLoading(true);
       setStationsStatusError(null);
-      const response = await axios.get(process.env.REACT_APP_API_URL);
+      const response = await axios.get(apiUrl);
       setStationsStatus(response.data.map(parseStationStatus));
       setStationsStatusLoading(false);
     } catch (error) {
