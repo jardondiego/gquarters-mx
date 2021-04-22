@@ -110,10 +110,11 @@
 
 .Station__eta-is-queue {
   margin-top: 0.5rem;
+  font-size: 1.25rem;
 }
 
 .Station__eta-is-queue--enabled {
-  color: red;
+  color: darkorange;
 }
 
 .Station__will-be-busy__label {

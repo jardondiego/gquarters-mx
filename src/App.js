@@ -95,7 +95,7 @@ function App() {
                   }`}
                 >
                   {stationStatus.isQueue
-                    ? "SI hay alguien esperando"
+                    ? "hay alguien esperando"
                     : "NO hay nadie esperando"}
                 </span>
               </div>
