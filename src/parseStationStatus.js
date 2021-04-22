@@ -6,7 +6,7 @@ export default function parseStationStatus({
   alias,
   free_at,
   busy_at,
-  isQueue,
+  is_queue,
 }) {
   const etaHoursFree = moment(free_at).diff(moment(), "hours");
   const etaMinsFree = moment(free_at).diff(moment(), "minutes") % 60;
@@ -30,6 +30,6 @@ export default function parseStationStatus({
     etaFree: available ? null : etaFree,
     etaBusy,
     available,
-    isQueue,
+    isQueue: is_queue,
   };
 }

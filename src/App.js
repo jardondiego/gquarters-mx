@@ -89,12 +89,12 @@ function App() {
                 </span>
                 <span
                   className={`Station__eta-is-queue ${
-                    stationStatus.isQueue
+                    stationStatus.is_queue
                       ? "Station__eta-is-queue--enabled"
                       : ""
                   }`}
                 >
-                  {stationStatus.isQueue
+                  {stationStatus.is_queue
                     ? "hay alguien esperando"
                     : "NO hay nadie esperando"}
                 </span>
