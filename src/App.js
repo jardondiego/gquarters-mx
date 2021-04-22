@@ -71,7 +71,7 @@ function App() {
                 </span>
               </div>
             )}
-            {stationStatus.busy_at !== null && (
+            {stationStatus.busy_at !== null && stationStatus.available && (
               <div className="Station__will-be-busy">
                 <span className="Station__will-be-busy__label">
                   se va a ocupar en:
