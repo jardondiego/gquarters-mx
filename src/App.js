@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { CircleSpinner } from "react-spinners-kit";
 import axios from "axios";
 
-import parseStationStatus from './parseStationStatus';
+import parseStationStatus from "./parseStationStatus";
 import "./App.css";
 
 import logo from "./logo.png";
@@ -13,9 +13,9 @@ import deltaStationImage from "./delta-station.png";
 
 const stationsImages = {
   alpha: alphaStationImage,
-  bravo: bravoStationImage, 
+  bravo: bravoStationImage,
   charlie: charlieStationImage,
-  delta: deltaStationImage
+  delta: deltaStationImage,
 };
 
 const EVERY_MINUTE = 60 * 1000;
@@ -50,7 +50,7 @@ function App() {
   if (stationsStatus !== null) {
     stationsStatusEl = (
       <div className="Stations">
-        {stationsStatus.map(parseStationStatus).map(stationStatus => (
+        {stationsStatus.map(parseStationStatus).map((stationStatus) => (
           <div className="Station" key={stationStatus.id}>
             <span className="Station__codename">{stationStatus.alias}</span>
             <img
@@ -67,14 +67,25 @@ function App() {
               <div className="Station__availability">
                 <div className="Station__unavailable"></div>
                 <span className="Station__availability-label">
-                  No disponible
+                  Alguien está jugando...
                 </span>
               </div>
             )}
             {!stationStatus.available && (
               <div className="Station__eta">
-                <span className="Station__eta-label">Se desocupa: </span>
+                <span className="Station__eta-label">se le acaba</span>
                 <span className="Station__eta-value">{stationStatus.eta}</span>
+                <span
+                  className={`Station__eta-is-queue ${
+                    stationStatus.isQueue
+                      ? "Station__eta-is-queue--enabled"
+                      : ""
+                  }`}
+                >
+                  {stationStatus.isQueue
+                    ? "SI hay alguien esperando"
+                    : "NO hay nadie esperando"}
+                </span>
               </div>
             )}
           </div>
@@ -96,7 +107,7 @@ function App() {
       <div className="Loader">
         <CircleSpinner />
       </div>
-    )
+    );
   }
 
   return (

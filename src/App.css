@@ -99,12 +99,21 @@
 .Station__eta-label {
   display: block;
   font-size: 1.25rem;
+  margin-top: 0.25rem;
 }
 
 .Station__eta-value {
   display: block;
   width: 100%;
-  font-size: 1.55rem;
+  font-size: 2rem;
+}
+
+.Station__eta-is-queue {
+  margin-top: 0.25rem;
+}
+
+.Station__eta-is-queue--enabled {
+  color: red;
 }
 
 .Error {
