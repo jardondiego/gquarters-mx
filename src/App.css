@@ -175,10 +175,6 @@
     padding-bottom: 4rem;
   }
 
-  .Station__image {
-    max-width: 10rem;
-  }
-
   .Error {
     overflow-y: auto;
     max-width: 80%;
