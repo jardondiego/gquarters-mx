@@ -2,12 +2,14 @@
   background-color: black;
   color: white;
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
   padding-top: 8rem;
+  overflow-y: auto;
+  padding-bottom: 4rem;
 }
 
 .Navigation {
@@ -156,14 +158,9 @@
 
 
 @media screen and (max-width: 720px) {
-  .App {
-    padding-top: 8rem;
-  }
-
   .Stations {
     height: 100%;
     grid-template-columns: 100%;
-    overflow-y: auto;
   }
 
   .Station:first-child {
