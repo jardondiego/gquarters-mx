@@ -3,10 +3,11 @@ import { CircleSpinner } from "react-spinners-kit";
 import axios from "axios";
 
 import parseStationStatus from "./parseStationStatus";
-import { apiUrl } from './constants';
+import { apiUrl } from "./constants";
 import "./App.css";
 
 import logo from "./logo.png";
+import facebookIcon from "./facebook.svg";
 import alphaStationImage from "./alpha-station.png";
 import bravoStationImage from "./bravo-station.png";
 import charlieStationImage from "./charlie-station.png";
@@ -128,6 +129,18 @@ function App() {
       <nav className="Navigation">
         <a className="Navigation__link" href="/">
           <img className="Navigation__logo" src={logo} alt="Gaming Quarters" />
+        </a>
+        <a
+          className="Navigation__link"
+          href={process.env.REACT_APP_FACEBOOK_URL}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img
+            className="Navigation__facebook"
+            src={facebookIcon}
+            alt="Facebook"
+          />
         </a>
       </nav>
       {stationsStatusEl}

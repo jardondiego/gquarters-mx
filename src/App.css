@@ -18,6 +18,9 @@
   left: 0;
   padding: 1.5rem;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .Navigation__logo {
