@@ -1,0 +1,123 @@
+.Stations {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 3rem;
+}
+
+.Station {
+  user-select: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: space-around;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.Station:first-child {
+  grid-column: 2 / span 1;
+}
+
+.Station:nth-child(3) {
+  grid-column: 2 / span 1;
+}
+
+.Station__codename {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.Station__image {
+  display: block;
+  max-height: 128px;
+  user-select: none;
+}
+
+.Station__availability {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.Station__availability-label {
+  margin-left: 0.5rem;
+  font-size: 1.25rem;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.Station__available,
+.Station__unavailable {
+  display: inline-block;
+}
+
+.Station__available {
+  background-color: #107C10;
+  box-shadow: 0px 0px 2rem 2rem rgba(16, 124, 16, 0.5);
+  border-radius: 50%;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.Station__unavailable {
+  background-color: red;
+  box-shadow: 0px 0px 2rem 2rem rgba(255, 0, 0, 0.5);
+  border-radius: 50%;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.Station__eta-label {
+  display: block;
+  font-size: 1.25rem;
+  margin-top: 0.25rem;
+}
+
+.Station__eta-value {
+  display: block;
+  width: 100%;
+  font-size: 2rem;
+}
+
+.Station__eta-is-queue {
+  margin-top: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.Station__eta-is-queue--enabled {
+  color: darkorange;
+}
+
+.Station__will-be-busy__label {
+  display: block;
+  text-align: center;
+  width: 100%;
+  font-size: 1.25rem;
+  color: darkorange;
+}
+
+.Station__will-be-busy__eta {
+   font-size: 1.5rem;
+}
+
+@media screen and (max-width: 720px) {
+  .Stations {
+    height: 100%;
+    grid-template-columns: 100%;
+  }
+
+  .Station:first-child {
+    grid-column: 1 / span 1;
+  }
+
+  .Station:nth-child(3) {
+    grid-column: 1 / span 1;
+  }
+
+  .Station:last-child {
+    padding-bottom: 4rem;
+  }
+}
