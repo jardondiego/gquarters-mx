@@ -6,7 +6,7 @@ import bravoStationImage from "assets/bravo-station.png";
 import charlieStationImage from "assets/charlie-station.png";
 import deltaStationImage from "assets/delta-station.png";
 
-import './Stations.css';
+import "./Stations.css";
 
 const stationsImages = {
   alpha: alphaStationImage,
