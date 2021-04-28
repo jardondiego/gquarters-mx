@@ -5,7 +5,7 @@ const productionConfig = JSON.parse(
   process.env.REACT_APP_FIREBASE_CONFIG_PRODUCTION
 );
 const stagingConfig = JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG_STAGING);
-const config = globals.isProduction ? productionConfig : stagingConfig;
+const config = JSON.parse(globals.isProduction ? productionConfig : stagingConfig);
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
