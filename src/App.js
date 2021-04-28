@@ -4,9 +4,9 @@ import { CircleSpinner } from "react-spinners-kit";
 import axios from "axios";
 
 // Local imports
+import { firebase, globals } from "services";
 import parseStationStatus from "./parseStationStatus";
 import { Stations } from "./components";
-import { apiUrl } from "./constants";
 
 // Assets
 import logo from "assets/logo.png";
@@ -22,7 +22,7 @@ function App() {
     try {
       setStationsStatusLoading(true);
       setStationsStatusError(null);
-      const response = await axios.get(apiUrl);
+      const response = await axios.get(globals.apiUrl);
       setStationsStatus(response.data.map(parseStationStatus));
       setStationsStatusLoading(false);
     } catch (error) {
@@ -56,9 +56,7 @@ function App() {
 
   let stationsStatusEl = null;
   if (stationsStatus !== null) {
-    stationsStatusEl = (
-      <Stations stationsStatus={stationsStatus} />
-    );
+    stationsStatusEl = <Stations stationsStatus={stationsStatus} />;
   } else if (stationsStatusError !== null) {
     stationsStatusEl = (
       <div className="Error">
