@@ -32,6 +32,17 @@ function App() {
   }
 
   useEffect(() => {
+    const messaging = firebase.messaging();
+    const { vapidKey } = globals;
+    messaging
+      .getToken({
+        vapidKey,
+      })
+      .then(console.log)
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
     fetchStationsStatus();
     // Fetch stations status from API
     const pid = setInterval(fetchStationsStatus, EVERY_MINUTE);
