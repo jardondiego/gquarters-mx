@@ -17,6 +17,11 @@ import "./App.css";
 const EVERY_MINUTE = 60 * 1000;
 
 function App() {
+  const [stationsStatusError, setStationsStatusError] = useState(null);
+  const [stationsStatusLoading, setStationsStatusLoading] = useState(false);
+  const [stationsStatus, setStationsStatus] = useState(null);
+  const [FCMToken, setFCMToken] = useState(null);
+
   async function fetchStationsStatus() {
     try {
       setStationsStatusLoading(true);
@@ -33,13 +38,30 @@ function App() {
   useEffect(() => {
     const messaging = firebase.messaging();
     const { vapidKey } = globals;
+
+    const lsFCMToken = localStorage.getItem("fcm_token");
+    if (lsFCMToken !== null) {
+      setFCMToken(lsFCMToken);
+      return;
+    }
+
     messaging
       .getToken({
         vapidKey,
       })
-      .then(console.log)
+      .then((token) => {
+        localStorage.setItem("fcm_token", token);
+        setFCMToken(token);
+      })
       .catch(console.error);
   }, []);
+
+  useEffect(() => {
+    api
+      .subscribeForNotifications(FCMToken)
+      .then(console.log)
+      .catch(console.error);
+  }, [FCMToken]);
 
   useEffect(() => {
     fetchStationsStatus();
@@ -48,10 +70,6 @@ function App() {
 
     return () => clearInterval(pid);
   }, []);
-
-  const [stationsStatusError, setStationsStatusError] = useState(null);
-  const [stationsStatusLoading, setStationsStatusLoading] = useState(false);
-  const [stationsStatus, setStationsStatus] = useState(null);
 
   let stationsStatusEl = null;
   if (stationsStatus !== null) {
