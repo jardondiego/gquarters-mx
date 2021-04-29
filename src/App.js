@@ -1,10 +1,9 @@
 // External imports
 import { useState, useEffect } from "react";
 import { CircleSpinner } from "react-spinners-kit";
-import axios from "axios";
 
 // Local imports
-import { firebase, globals } from "services";
+import { firebase, globals, api } from "services";
 import parseStationStatus from "./parseStationStatus";
 import { Stations } from "./components";
 
@@ -22,7 +21,7 @@ function App() {
     try {
       setStationsStatusLoading(true);
       setStationsStatusError(null);
-      const response = await axios.get(globals.apiUrl);
+      const response = await api.getStationsAvailability();
       setStationsStatus(response.data.map(parseStationStatus));
       setStationsStatusLoading(false);
     } catch (error) {
