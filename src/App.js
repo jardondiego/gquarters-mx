@@ -1,12 +1,11 @@
 // External imports
 import { useState, useEffect } from "react";
 import { CircleSpinner } from "react-spinners-kit";
-import axios from "axios";
 
 // Local imports
+import { firebase, globals, api } from "services";
 import parseStationStatus from "./parseStationStatus";
 import { Stations } from "./components";
-import { apiUrl } from "./constants";
 
 // Assets
 import logo from "assets/logo.png";
@@ -18,11 +17,16 @@ import "./App.css";
 const EVERY_MINUTE = 60 * 1000;
 
 function App() {
+  const [stationsStatusError, setStationsStatusError] = useState(null);
+  const [stationsStatusLoading, setStationsStatusLoading] = useState(false);
+  const [stationsStatus, setStationsStatus] = useState(null);
+  const [FCMToken, setFCMToken] = useState(null);
+
   async function fetchStationsStatus() {
     try {
       setStationsStatusLoading(true);
       setStationsStatusError(null);
-      const response = await axios.get(apiUrl);
+      const response = await api.getStationsAvailability();
       setStationsStatus(response.data.map(parseStationStatus));
       setStationsStatusLoading(false);
     } catch (error) {
@@ -32,6 +36,31 @@ function App() {
   }
 
   useEffect(() => {
+    const messaging = firebase.messaging();
+    const { vapidKey } = globals;
+
+    const lsFCMToken = localStorage.getItem("fcm_token");
+    if (lsFCMToken !== null) {
+      setFCMToken(lsFCMToken);
+      return;
+    }
+
+    messaging
+      .getToken({
+        vapidKey,
+      })
+      .then((token) => {
+        localStorage.setItem("fcm_token", token);
+        setFCMToken(token);
+      })
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    api.subscribeForNotifications(FCMToken);
+  }, [FCMToken]);
+
+  useEffect(() => {
     fetchStationsStatus();
     // Fetch stations status from API
     const pid = setInterval(fetchStationsStatus, EVERY_MINUTE);
@@ -39,15 +68,9 @@ function App() {
     return () => clearInterval(pid);
   }, []);
 
-  const [stationsStatusError, setStationsStatusError] = useState(null);
-  const [stationsStatusLoading, setStationsStatusLoading] = useState(false);
-  const [stationsStatus, setStationsStatus] = useState(null);
-
   let stationsStatusEl = null;
   if (stationsStatus !== null) {
-    stationsStatusEl = (
-      <Stations stationsStatus={stationsStatus} />
-    );
+    stationsStatusEl = <Stations stationsStatus={stationsStatus} />;
   } else if (stationsStatusError !== null) {
     stationsStatusEl = (
       <div className="Error">
