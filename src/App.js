@@ -57,10 +57,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    api
-      .subscribeForNotifications(FCMToken)
-      .then(console.log)
-      .catch(console.error);
+    api.subscribeForNotifications(FCMToken);
   }, [FCMToken]);
 
   useEffect(() => {
