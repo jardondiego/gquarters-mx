@@ -6,7 +6,12 @@ const envToUrl = {
 
 const apiUrl = envToUrl[process.env.REACT_APP_ENVIRONMENT];
 const isProduction = process.env.REACT_APP_ENVIRONMENT === "production";
-const vapidKey = isProduction ? process.env.REACT_APP_FCM_VAPID_KEY_PRODUCTION : process.env.REACT_APP_FCM_VAPID_KEY_STAGING
+const vapidKey = isProduction
+  ? process.env.REACT_APP_FCM_VAPID_KEY_PRODUCTION
+  : process.env.REACT_APP_FCM_VAPID_KEY_STAGING;
+const workerUrl = isProduction
+  ? "firebase-messaging-sw-production.js"
+  : "firebase-messaging-sw-staging.js";
 
-const globals = { apiUrl, isProduction, vapidKey };
+const globals = { apiUrl, isProduction, vapidKey, workerUrl };
 export default globals;
