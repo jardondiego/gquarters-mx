@@ -65,6 +65,7 @@ function App() {
         new Error("Service worker is not supported in this browser!")
       );
     }
+
     setTimeout(() => {
       setIsActivatingNotifications(false);
       setIsActivatingNotificationsError(null);
@@ -141,7 +142,7 @@ function App() {
         <a className="Navigation__link" href="/">
           <img className="Navigation__logo" src={logo} alt="Gaming Quarters" />
         </a>
-        {!lsFCMToken && (
+        {(!lsFCMToken || isActivatingNotificationsSuccess) && (
           <a
             className="Navigation__link Navigation__notifications"
             href="#!"
