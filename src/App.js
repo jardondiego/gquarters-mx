@@ -10,6 +10,9 @@ import { Stations } from "./components";
 // Assets
 import logo from "assets/logo.png";
 import facebookIcon from "assets/facebook.svg";
+import addNotificationsIcon from "assets/notification-add.svg";
+import checkIcon from "assets/done.svg";
+import errorIcon from "assets/error.svg";
 
 // Styles
 import "./App.css";
@@ -20,7 +23,55 @@ function App() {
   const [stationsStatusError, setStationsStatusError] = useState(null);
   const [stationsStatusLoading, setStationsStatusLoading] = useState(false);
   const [stationsStatus, setStationsStatus] = useState(null);
+
+  const [isActivatingNotifications, setIsActivatingNotifications] = useState(
+    false
+  );
+  const [
+    isActivatingNotificationsError,
+    setIsActivatingNotificationsError,
+  ] = useState(null);
+  const [
+    isActivatingNotificationsSuccess,
+    setIsActivatingNotificationsSuccess,
+  ] = useState(false);
   const [FCMToken, setFCMToken] = useState(null);
+
+  const lsFCMToken = localStorage.getItem("fcm_token");
+
+  async function activateNotifications() {
+    const messaging = firebase.messaging();
+    const { vapidKey } = globals;
+    if ("serviceWorker" in navigator) {
+      try {
+        setIsActivatingNotifications(true);
+        const registration = await navigator.serviceWorker.register(
+          `./${globals.workerUrl}`
+        );
+        const token = await messaging.getToken({
+          vapidKey,
+          serviceWorkerRegistration: registration,
+        });
+        localStorage.setItem("fcm_token", token);
+        setFCMToken(token);
+        setIsActivatingNotificationsSuccess(true);
+      } catch (error) {
+        setIsActivatingNotificationsError(error);
+        console.error(error);
+      }
+      setIsActivatingNotifications(false);
+    } else {
+      setIsActivatingNotificationsError(
+        new Error("Service worker is not supported in this browser!")
+      );
+    }
+
+    setTimeout(() => {
+      setIsActivatingNotifications(false);
+      setIsActivatingNotificationsError(null);
+      setIsActivatingNotificationsSuccess(false);
+    }, 2500);
+  }
 
   async function fetchStationsStatus() {
     try {
@@ -36,35 +87,20 @@ function App() {
   }
 
   useEffect(() => {
-    const messaging = firebase.messaging();
-    const { vapidKey } = globals;
-
-    const lsFCMToken = localStorage.getItem("fcm_token");
     if (lsFCMToken !== null) {
       setFCMToken(lsFCMToken);
       return;
     }
-
-    messaging
-      .getToken({
-        vapidKey,
-      })
-      .then((token) => {
-        localStorage.setItem("fcm_token", token);
-        setFCMToken(token);
-      })
-      .catch(console.error);
-  }, []);
+  }, [lsFCMToken]);
 
   useEffect(() => {
-    api.subscribeForNotifications(FCMToken);
+    if (FCMToken !== null) api.subscribeForNotifications(FCMToken);
   }, [FCMToken]);
 
   useEffect(() => {
     fetchStationsStatus();
     // Fetch stations status from API
     const pid = setInterval(fetchStationsStatus, EVERY_MINUTE);
-
     return () => clearInterval(pid);
   }, []);
 
@@ -89,12 +125,32 @@ function App() {
     );
   }
 
+  let notificationsCue = (
+    <img src={addNotificationsIcon} alt="Activate notifications" />
+  );
+
+  if (isActivatingNotifications)
+    notificationsCue = <CircleSpinner color="black" size={24} />;
+  else if (isActivatingNotificationsSuccess)
+    notificationsCue = <img src={checkIcon} alt="Notifications on!" />;
+  else if (isActivatingNotificationsError)
+    notificationsCue = <img src={errorIcon} alt="Error" />;
+
   return (
     <div className="App">
       <nav className="Navigation">
         <a className="Navigation__link" href="/">
           <img className="Navigation__logo" src={logo} alt="Gaming Quarters" />
         </a>
+        {(!lsFCMToken || isActivatingNotificationsSuccess) && (
+          <a
+            className="Navigation__link Navigation__notifications"
+            href="#!"
+            onClick={() => activateNotifications()}
+          >
+            {notificationsCue}
+          </a>
+        )}
         <a
           className="Navigation__link"
           href={process.env.REACT_APP_FACEBOOK_URL}
