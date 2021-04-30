@@ -130,7 +130,7 @@ function App() {
   );
 
   if (isActivatingNotifications)
-    notificationsCue = <CircleSpinner color="black" />;
+    notificationsCue = <CircleSpinner color="black" size={24} />;
   else if (isActivatingNotificationsSuccess)
     notificationsCue = <img src={checkIcon} alt="Notifications on!" />;
   else if (isActivatingNotificationsError)
