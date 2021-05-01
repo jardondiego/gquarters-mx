@@ -3,9 +3,8 @@ import { useState, useEffect } from "react";
 import { CircleSpinner } from "react-spinners-kit";
 
 // Local imports
-import { firebase, globals, api } from "services";
-import parseStationStatus from "./parseStationStatus";
-import { Stations } from "./components";
+import { firebase, globals, api, utils } from "services";
+import { Stations, WelcomeTour } from "./components";
 
 // Assets
 import logo from "assets/logo.png";
@@ -22,7 +21,7 @@ const EVERY_MINUTE = 60 * 1000;
 function Main() {
   const [stationsStatusError, setStationsStatusError] = useState(null);
   const [stationsStatusLoading, setStationsStatusLoading] = useState(false);
-  const [stationsStatus, setStationsStatus] = useState(null);
+  const [stationsStatus, setStationsStatus] = useState([]);
 
   const [isActivatingNotifications, setIsActivatingNotifications] = useState(
     false
@@ -38,6 +37,9 @@ function Main() {
   const [FCMToken, setFCMToken] = useState(null);
 
   const lsFCMToken = localStorage.getItem("fcm_token");
+  const isFirstVisit = localStorage.getItem("visited") === null;
+
+  const [isTour, setIsTour] = useState(isFirstVisit);
 
   async function activateNotifications() {
     const messaging = firebase.messaging();
@@ -78,7 +80,7 @@ function Main() {
       setStationsStatusLoading(true);
       setStationsStatusError(null);
       const response = await api.getStationsAvailability();
-      setStationsStatus(response.data.map(parseStationStatus));
+      setStationsStatus(response.data.map(utils.parseStationStatus));
       setStationsStatusLoading(false);
     } catch (error) {
       setStationsStatusError(error);
@@ -147,13 +149,14 @@ function Main() {
             className="Navigation__link Navigation__notifications"
             href="#!"
             onClick={() => activateNotifications()}
+            data-tour="enable-notifications"
           >
             {notificationsCue}
           </a>
         )}
         <a
           className="Navigation__link"
-          href={process.env.REACT_Main_FACEBOOK_URL}
+          href={globals.facebookUrl}
           target="_blank"
           rel="noreferrer"
         >
@@ -164,7 +167,17 @@ function Main() {
           />
         </a>
       </nav>
-      {stationsStatusEl}
+      {isFirstVisit ? (
+        <WelcomeTour
+          isOpen={isTour}
+          onClose={() => {
+            setIsTour(false);
+            localStorage.setItem("visited", "true");
+          }}
+        />
+      ) : (
+        stationsStatusEl
+      )}
     </div>
   );
 }
