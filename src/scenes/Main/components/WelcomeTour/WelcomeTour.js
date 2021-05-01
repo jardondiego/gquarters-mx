@@ -13,18 +13,10 @@ function WelcomeTour({ isOpen, onClose }) {
       content: (
         <p style={{ fontFamily: "Roboto" }}>
           <h2>
-            Bienvenido a <b>Gaming Quarters!</b>
+            ¡Bienvenido a <b>Gaming Quarters!</b>
           </h2>
-          En este nuestro sitio, puedes checar si hay lugar para jugar
-          <i>sin que tengas que salir de tu casa.</i>
-        </p>
-      ),
-    },
-    {
-      selector: "[data-tour='enable-notifications']",
-      content: () => (
-        <p style={{ fontFamily: "Roboto" }}>
-          ¡Recibe notificaciones cuando una estación esté disponbible!
+          En este nuestro sitio, aquí uedes checar si hay lugar para jugar{" "}
+          <b style={{ color: "green" }}>sin que tengas que salir de tu casa.</b>
         </p>
       ),
     },
@@ -46,6 +38,14 @@ function WelcomeTour({ isOpen, onClose }) {
         </p>
       ),
       position: "top",
+    },
+    {
+      selector: "[data-tour='enable-notifications']",
+      content: () => (
+        <p style={{ fontFamily: "Roboto" }}>
+          ¡Recibe notificaciones cuando una estación esté disponbible!
+        </p>
+      ),
     },
   ];
 
