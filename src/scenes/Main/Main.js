@@ -3,9 +3,8 @@ import { useState, useEffect } from "react";
 import { CircleSpinner } from "react-spinners-kit";
 
 // Local imports
-import { firebase, globals, api } from "services";
-import parseStationStatus from "./parseStationStatus";
-import { Stations } from "./components";
+import { firebase, globals, api, utils } from "services";
+import { Stations, WelcomeTour } from "./components";
 
 // Assets
 import logo from "assets/logo.png";
@@ -15,14 +14,14 @@ import checkIcon from "assets/done.svg";
 import errorIcon from "assets/error.svg";
 
 // Styles
-import "./App.css";
+import "./Main.css";
 
 const EVERY_MINUTE = 60 * 1000;
 
-function App() {
+function Main() {
   const [stationsStatusError, setStationsStatusError] = useState(null);
   const [stationsStatusLoading, setStationsStatusLoading] = useState(false);
-  const [stationsStatus, setStationsStatus] = useState(null);
+  const [stationsStatus, setStationsStatus] = useState([]);
 
   const [isActivatingNotifications, setIsActivatingNotifications] = useState(
     false
@@ -38,6 +37,9 @@ function App() {
   const [FCMToken, setFCMToken] = useState(null);
 
   const lsFCMToken = localStorage.getItem("fcm_token");
+  const isFirstVisit = localStorage.getItem("visited") === null;
+
+  const [isTour, setIsTour] = useState(isFirstVisit);
 
   async function activateNotifications() {
     const messaging = firebase.messaging();
@@ -78,7 +80,7 @@ function App() {
       setStationsStatusLoading(true);
       setStationsStatusError(null);
       const response = await api.getStationsAvailability();
-      setStationsStatus(response.data.map(parseStationStatus));
+      setStationsStatus(response.data.map(utils.parseStationStatus));
       setStationsStatusLoading(false);
     } catch (error) {
       setStationsStatusError(error);
@@ -137,7 +139,7 @@ function App() {
     notificationsCue = <img src={errorIcon} alt="Error" />;
 
   return (
-    <div className="App">
+    <div className="Main">
       <nav className="Navigation">
         <a className="Navigation__link" href="/">
           <img className="Navigation__logo" src={logo} alt="Gaming Quarters" />
@@ -147,13 +149,14 @@ function App() {
             className="Navigation__link Navigation__notifications"
             href="#!"
             onClick={() => activateNotifications()}
+            data-tour="enable-notifications"
           >
             {notificationsCue}
           </a>
         )}
         <a
           className="Navigation__link"
-          href={process.env.REACT_APP_FACEBOOK_URL}
+          href={globals.facebookUrl}
           target="_blank"
           rel="noreferrer"
         >
@@ -164,9 +167,19 @@ function App() {
           />
         </a>
       </nav>
-      {stationsStatusEl}
+      {isFirstVisit ? (
+        <WelcomeTour
+          isOpen={isTour}
+          onClose={() => {
+            setIsTour(false);
+            localStorage.setItem("visited", "true");
+          }}
+        />
+      ) : (
+        stationsStatusEl
+      )}
     </div>
   );
 }
 
-export default App;
+export default Main;
