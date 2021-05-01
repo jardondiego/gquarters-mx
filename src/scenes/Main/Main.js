@@ -107,7 +107,7 @@ function Main() {
   }, []);
 
   let stationsStatusEl = null;
-  if (stationsStatus !== null) {
+  if (stationsStatus.length !== 0) {
     stationsStatusEl = <Stations stationsStatus={stationsStatus} />;
   } else if (stationsStatusError !== null) {
     stationsStatusEl = (
