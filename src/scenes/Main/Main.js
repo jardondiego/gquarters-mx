@@ -148,7 +148,11 @@ function Main() {
           <a
             className="Navigation__link Navigation__notifications"
             href="#!"
-            onClick={() => activateNotifications()}
+            onClick={() => {
+              activateNotifications();
+              setIsTour(false);
+              localStorage.setItem("visited", "true");
+            }}
             data-tour="enable-notifications"
           >
             {notificationsCue}
