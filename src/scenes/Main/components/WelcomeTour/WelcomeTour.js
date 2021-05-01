@@ -5,47 +5,66 @@ import Tour from "reactour";
 import Stations from "../Stations";
 import { utils } from "services";
 
+import demoStationsStatus from "./demoStationsStatus";
 function WelcomeTour({ isOpen, onClose }) {
-  const demoStationsStatus = [
-    {
-      alias: "alpha",
-      id: "1",
-      free_at: "",
-      is_queue: false,
-      busy_at: null,
-    },
-    { alias: "bravo", id: "2", free_at: "", is_queue: false, busy_at: null },
-  ].map(utils.parseStationStatus);
-
-  console.log(demoStationsStatus)
-
   const steps = [
     {
       selector: "",
-      content: "Bienvenido!",
+      content: (
+        <p style={{ fontFamily: "Roboto" }}>
+          <h2>
+            Bienvenido a <b>Gaming Quarters!</b>
+          </h2>
+          En este nuestro sitio, puedes checar si hay lugar para jugar
+          <i>sin que tengas que salir de tu casa.</i>
+        </p>
+      ),
     },
     {
       selector: "[data-tour='enable-notifications']",
-      content: "Estas son las notificaciones",
+      content: () => (
+        <p style={{ fontFamily: "Roboto" }}>
+          ¡Recibe notificaciones cuando una estación esté disponbible!
+        </p>
+      ),
     },
     {
       selector: ".Station:nth-child(1)",
-      content: "Esta es la primera estación",
+      content: () => (
+        <p style={{ fontFamily: "Roboto" }}>
+          Así se ve una estación cuando está disponible para jugar.
+        </p>
+      ),
       position: "bottom",
     },
     {
       selector: ".Station:nth-child(2)",
-      content: "Esta es la segunda estación",
+      content: () => (
+        <p style={{ fontFamily: "Roboto" }}>
+          Así se ve una estación cuando esta ocupada. Puedes ver en cuánto se
+          desocupa y si hay alguien esperando por ella.
+        </p>
+      ),
       position: "top",
     },
   ];
 
-  const tour = <Tour steps={steps} isOpen={isOpen} onRequestClose={onClose} />;
+  const tour = (
+    <Tour
+      accentColor="black"
+      showNumber={false}
+      steps={steps}
+      isOpen={isOpen}
+      onRequestClose={onClose}
+    />
+  );
 
   return (
     <>
       {tour}
-      <Stations stationsStatus={demoStationsStatus} />
+      <Stations
+        stationsStatus={demoStationsStatus.map(utils.parseStationStatus)}
+      />
     </>
   );
 }
