@@ -15,11 +15,11 @@ import checkIcon from "assets/done.svg";
 import errorIcon from "assets/error.svg";
 
 // Styles
-import "./App.css";
+import "./Main.css";
 
 const EVERY_MINUTE = 60 * 1000;
 
-function App() {
+function Main() {
   const [stationsStatusError, setStationsStatusError] = useState(null);
   const [stationsStatusLoading, setStationsStatusLoading] = useState(false);
   const [stationsStatus, setStationsStatus] = useState(null);
@@ -137,7 +137,7 @@ function App() {
     notificationsCue = <img src={errorIcon} alt="Error" />;
 
   return (
-    <div className="App">
+    <div className="Main">
       <nav className="Navigation">
         <a className="Navigation__link" href="/">
           <img className="Navigation__logo" src={logo} alt="Gaming Quarters" />
@@ -153,7 +153,7 @@ function App() {
         )}
         <a
           className="Navigation__link"
-          href={process.env.REACT_APP_FACEBOOK_URL}
+          href={process.env.REACT_Main_FACEBOOK_URL}
           target="_blank"
           rel="noreferrer"
         >
@@ -169,4 +169,4 @@ function App() {
   );
 }
 
-export default App;
+export default Main;
