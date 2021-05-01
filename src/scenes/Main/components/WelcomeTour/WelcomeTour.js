@@ -15,7 +15,7 @@ function WelcomeTour({ isOpen, onClose }) {
           <h2>
             ¡Bienvenido a <b>Gaming Quarters!</b>
           </h2>
-          En este nuestro sitio, aquí uedes checar si hay lugar para jugar{" "}
+          En este nuestro sitio, aquí puedes checar si hay lugar para jugar{" "}
           <b style={{ color: "green" }}>sin que tengas que salir de tu casa.</b>
         </p>
       ),
