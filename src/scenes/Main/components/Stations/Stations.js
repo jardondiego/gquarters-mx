@@ -25,6 +25,7 @@ Stations.propTypes = {
       busyAt: PropTypes.oneOf([PropTypes.instanceOf(Date), null]),
       etaBusy: PropTypes.string.isRequired,
       etaFree: PropTypes.oneOf([PropTypes.string.isRequired, null]),
+      imageUrl: PropTypes.oneOf([PropTypes.string.isRequired, null]),
     }).isRequired
   ).isRequired,
 };

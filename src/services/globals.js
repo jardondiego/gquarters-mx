@@ -14,5 +14,13 @@ const workerUrl = isProduction
   ? "firebase-messaging-sw-production.js"
   : "firebase-messaging-sw-staging.js";
 
-const globals = { apiUrl, isProduction, vapidKey, workerUrl, facebookUrl };
+const productionConfig = JSON.parse(
+  process.env.REACT_APP_FIREBASE_CONFIG_PRODUCTION
+);
+const stagingConfig = JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG_STAGING);
+const firebaseConfig = JSON.parse(
+  isProduction ? productionConfig : stagingConfig
+);
+
+const globals = { apiUrl, isProduction, vapidKey, workerUrl, facebookUrl, firebaseConfig };
 export default globals;

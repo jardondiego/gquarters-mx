@@ -4,11 +4,7 @@
   grid-gap: 3rem;
 }
 
-.Station:first-child {
-  grid-column: 2 / span 1;
-}
-
-.Station:nth-child(3) {
+.Station:nth-child(odd) {
   grid-column: 2 / span 1;
 }
 
@@ -22,7 +18,7 @@
     grid-column: 1 / span 1;
   }
 
-  .Station:nth-child(3) {
+  .Station:nth-child(odd) {
     grid-column: 1 / span 1;
   }
 

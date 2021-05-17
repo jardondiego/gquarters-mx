@@ -1,19 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import alphaStationImage from "assets/alpha-station.png";
-import bravoStationImage from "assets/bravo-station.png";
-import charlieStationImage from "assets/charlie-station.png";
-import deltaStationImage from "assets/delta-station.png";
-
 import "./Station.css"
-
-const stationsImages = {
-  alpha: alphaStationImage,
-  bravo: bravoStationImage,
-  charlie: charlieStationImage,
-  delta: deltaStationImage,
-};
 
 function Station({
   id,
@@ -23,11 +11,12 @@ function Station({
   etaBusy,
   etaFree,
   isQueue,
+  imageUrl,
 }) {
   return (
     <div className="Station" key={id}>
       <span className="Station__codename">{alias}</span>
-      <img src={stationsImages[alias]} alt={alias} className="Station__image" />
+      <img src={imageUrl} alt={alias} className="Station__image" />
       {available ? (
         <div className="Station__availability">
           <div className="Station__available"></div>
@@ -74,6 +63,7 @@ Station.propTypes = {
   busyAt: PropTypes.oneOf([PropTypes.instanceOf(Date), null]),
   etaBusy: PropTypes.string.isRequired,
   etaFree: PropTypes.oneOf([PropTypes.string.isRequired, null]),
+  imageUrl: PropTypes.oneOf([PropTypes.string.isRequired, null]),
 };
 
 export default Station;
