@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "./Station.css"
+import "./Station.css";
 
 function Station({
   id,
@@ -12,6 +12,7 @@ function Station({
   etaFree,
   isQueue,
   imageUrl,
+  isFreeTime
 }) {
   return (
     <div className="Station" key={id}>
@@ -40,8 +41,12 @@ function Station({
       )}
       {!available && (
         <div className="Station__eta">
-          <span className="Station__eta-label">se le acaba en:</span>
-          <span className="Station__eta-value">{etaFree}</span>
+          {!isFreeTime && (
+            <>
+              <span className="Station__eta-label">se le acaba en:</span>
+              <span className="Station__eta-value">{etaFree}</span>
+            </>
+          )}
           <span
             className={`Station__eta-is-queue ${
               isQueue ? "Station__eta-is-queue--enabled" : ""
